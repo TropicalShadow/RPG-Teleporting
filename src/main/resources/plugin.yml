@@ -1,0 +1,25 @@
+main: club.tesseract.rpgteleporting.RPGTeleporting
+name: RPGTeleporting
+api-version: 1.19
+version: @version@
+description: Teleporting via npcs like in Skyrim and other RPGS
+author: TropicalShadow
+website: "https://tesseract.club/"
+softdepend: ["Vault"]
+commands:
+  rpgteleporting:
+    permission: "rpgteleporting.command"
+    default: true
+permissions:
+  rpgteleporting.command.open.others:
+    description: "Allows the player to open the gui for others"
+    default: op
+  rpgteleporting.command.open:
+    description: "Allows the player to open the gui"
+    default: op
+  rpgteleporting.command.reload:
+    description: "Allows the player to reload the plugin"
+    default: op
+  rpgteleporting.command:
+    description: "Allows the player to use the plugin command"
+    default: op
