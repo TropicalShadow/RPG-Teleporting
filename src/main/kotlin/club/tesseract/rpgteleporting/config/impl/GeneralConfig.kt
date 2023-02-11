@@ -13,6 +13,8 @@ data class GeneralConfig(
     @YamlComment("Require player to have a permission to teleport to each outpost", "Example permission: rpgteleporting.outpost.{unique_identifier}", "default: false")
     val permissionPerOutpost: Boolean = false,
     @YamlComment("What should the plugin do if a player doesn't have permission to teleport to an outpost","Examples: ", "BARRIER - changes item type to barrier", "NONE - Does nothing to the item visually", "HIDDEN - hides the outpost in the gui so the player can't see it", "default: BARRIER")
-    val noPermissionType: NoPermissionType = NoPermissionType.BARRIER
+    val noPermissionType: NoPermissionType = NoPermissionType.BARRIER,
+    @YamlComment("Random Teleport Config")
+    val randomTeleports: List<RandomLocationConfig> = listOf(RandomLocationConfig())
 
 )

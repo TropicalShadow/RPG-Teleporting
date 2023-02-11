@@ -16,4 +16,12 @@ data class GuiMessageConfig(
         "<gray>World:<gold> <world><reset>".toMini(),
         "<gray>Location:<gold> <x>, <y>, <z><reset>".toMini(),
     ),
+    val randomItemName: @Serializable(with= ComponentSerializer::class) Component = "<gold>Random Location<reset>".toMini(),
+    val randomItemLore: List<@Serializable(with= ComponentSerializer::class) Component> = listOf(
+        "<gray>Cost:<gold> <cost><reset>".toMini(),
+        "<gray>World:<gold> <world><reset>".toMini(),
+        "<gray>Location:<gold> <x>, <y>, <z><reset>".toMini(),
+        "<gray>Range (chunks):<gold> <distance><reset>".toMini(),
+    ),
+
 )

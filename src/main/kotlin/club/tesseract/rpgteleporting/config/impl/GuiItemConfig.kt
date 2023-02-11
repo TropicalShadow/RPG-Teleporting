@@ -26,6 +26,46 @@ data class GuiItemConfig(
     val amount: Int = 1,
 ){
 
+    fun toItem(outpost: RandomLocationConfig, from: OutpostConfig, barrierOverride: Boolean = false): ItemStack{
+        val tagResolver = TagResolver.builder()
+            .resolvers(
+                Placeholder.component("outpost_name", outpost.name),
+                Placeholder.parsed("cost", outpost.cost?.toString()?: "0.0"),
+                Placeholder.parsed("distance", outpost.radius.div(16).toString()),
+                Placeholder.parsed("world", outpost.center.world),
+                Placeholder.parsed("world_title",outpost.center.worldTitle()),
+                Placeholder.parsed("x", outpost.center.x.toInt().toString()),
+                Placeholder.parsed("y", outpost.center.y.toInt().toString()),
+                Placeholder.parsed("z", outpost.center.z.toInt().toString()),
+            )
+            .build()
+
+        val material = if(!barrierOverride) Material.getMaterial(material)?: let{
+            return ItemStack(Material.STONE, amount).also{ item -> item.editMeta { meta -> meta.displayName(Component.text("Invalid Material Presented for ${outpost.name}")) }}
+        }
+        else Material.BARRIER
+
+        val item = ItemStack(material, amount)
+        val meta = item.itemMeta
+        val name = if(ConfigManager.getConfig().configPerItemName) name else ConfigManager.getMessage().gui.randomItemName
+        val lore = if(ConfigManager.getConfig().configPerItemName) lore else ConfigManager.getMessage().gui.randomItemLore
+
+        meta.displayName(name.format(tagResolver))
+        meta.lore(lore.map { it.format(tagResolver) })
+        if (glow) {
+            meta?.addEnchant(org.bukkit.enchantments.Enchantment.DURABILITY, 1, true)
+        }
+        meta.setCustomModelData(customModelData)
+
+        if(headUUID != null){
+            val skullMeta = meta as SkullMeta
+            skullMeta.owningPlayer = Bukkit.getOfflinePlayer(headUUID)
+        }
+
+        item.itemMeta = meta
+        return item
+    }
+
     fun toItem(outpost: OutpostConfig, from: OutpostConfig, barrierOverride: Boolean = false): ItemStack {
         val tagResolver = TagResolver.builder()
             .resolvers(

@@ -1,10 +1,7 @@
 package club.tesseract.rpgteleporting.config
 
 import club.tesseract.rpgteleporting.RPGTeleporting
-import club.tesseract.rpgteleporting.config.impl.GeneralConfig
-import club.tesseract.rpgteleporting.config.impl.OutpostConfig
-import club.tesseract.rpgteleporting.config.impl.SoundConfig
-import club.tesseract.rpgteleporting.config.impl.TeleportMenuConfig
+import club.tesseract.rpgteleporting.config.impl.*
 import club.tesseract.rpgteleporting.config.impl.message.MessageConfig
 import club.tesseract.rpgteleporting.utils.ComponentUtils.toMini
 import java.nio.file.Path
@@ -24,6 +21,7 @@ object ConfigManager {
     private lateinit var sound: SoundConfig
 
     private val outposts: HashMap<String, OutpostConfig> = hashMapOf()
+    private val random_outposts: HashMap<String, RandomLocationConfig> = hashMapOf()
     private val guis:  HashMap<String, TeleportMenuConfig> = hashMapOf()
 
     @OptIn(ExperimentalPathApi::class)
@@ -65,6 +63,10 @@ object ConfigManager {
             }
         }
 
+        config.randomTeleports.forEach {
+            random_outposts[it.identifier] = it
+        }
+
     }
 
     fun getConfig(): GeneralConfig {
@@ -85,6 +87,10 @@ object ConfigManager {
 
     fun getOutpost(identifier: String): OutpostConfig? {
         return outposts[identifier]
+    }
+
+    fun getRandomOutpost(identifier: String): RandomLocationConfig? {
+        return random_outposts[identifier]
     }
 
     fun getGuis(): List<TeleportMenuConfig> {
