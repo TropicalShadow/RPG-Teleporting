@@ -50,7 +50,7 @@ class TeleportGui(currentOutPost: String,val guiConfig: TeleportMenuConfig):
             }?:
             ConfigManager.getRandomOutpost(item.outpostIdentifier)?.let{
                 setupGuiItem(item, it, player, atomicIndex)
-            }
+            }?:
             let{
                 RPGTeleporting.getPlugin().logger.warning("Outpost ${item.outpostIdentifier} does not exist! gui tried to load it.")
             }
